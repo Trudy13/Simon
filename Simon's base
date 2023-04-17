@@ -1,0 +1,43 @@
+import tkinter as tk
+
+class Test():
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.geometry("500x500")
+        self.buttonA = tk.Button(self.root,
+                                 text = "Rojo",
+                                 bg = "red",
+                                 fg = "black",
+                                 height = 10, 
+                                 width = 10)
+
+        self.buttonB = tk.Button(self.root,
+                                text="Azul",
+                                bg = "blue",
+                                fg = "black",
+                                height = 10, 
+                                width = 10)
+       
+        self.buttonC = tk.Button(self.root,
+                               text="Verde",
+                               bg = "green",
+                               fg = "black",
+                               height = 10, 
+                               width = 10)
+        
+        self.buttonD = tk.Button(self.root,
+                                text="Amarillo",
+                                bg = "yellow",
+                                fg = "black",
+                                height = 10, 
+                                width = 10)
+        
+        self.buttonA.place(x=25, y=180)
+        self.buttonB.place(x=395, y=180)
+        self.buttonC.place(x=200, y=290)
+        self.buttonD.place(x=200, y=50)
+        self.root.mainloop()    
+        
+
+
+app = Test()
