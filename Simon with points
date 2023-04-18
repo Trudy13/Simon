@@ -1,0 +1,148 @@
+import tkinter as tk
+import random
+import time
+
+
+
+class Test(): 
+    
+    def click_start(self):
+        if self.simon_st == 'NS':
+            self.button_start.configure(bg = 'blue', text='My Turn')
+            self.simon_st = 'SS'
+            self.human_says = []
+            self.n_points = 0
+            self.update_points()
+            self.simon_says.append(random.randint(1, 4))
+            for i in self.simon_says:            
+                self.apariencia(i)
+                time.sleep(0.2)
+            self.button_start.configure(bg='green', text='Your Turn')
+            self.simon_st = 'HS'
+        elif self.simon_st == 'SS':
+            self.button_start.configure(bg = 'blue', text='My Turn')
+            self.simon_says.append(random.randint(1, 4))
+            for i in self.simon_says:            
+                self.apariencia(i)
+                time.sleep(0.2)
+            self.button_start.configure(bg='green', text='Your Turn')
+            self.simon_st = 'HS'
+        elif self.simon_st == 'HS':
+            print('HS')
+            #do nothing
+        
+    def apariencia(self, i):
+            if i == 1:
+                self.buttonA.configure(bg = "orange")
+            if i == 2:
+                self.buttonB.configure(bg = "light blue")
+            if i == 3:
+                self.buttonC.configure(bg = "light green")
+            if i == 4:
+                self.buttonD.configure(bg = "white")
+            self.root.update()
+            time.sleep(0.5)
+            self.reset_ui()
+
+    def reset_ui(self):
+        self.buttonA.configure(bg = "red")
+        self.buttonB.configure(bg = "blue")
+        self.buttonC.configure(bg = "green")
+        self.buttonD.configure(bg = "yellow")
+        self.root.update()
+    
+    def set_error(self):
+        self.button_start.configure(bg = 'red', text='Error')
+        self.root.update()
+        time.sleep(5)
+        self.simon_says = []
+        self.human_says = []
+        self.simon_st = 'NS'
+        self.button_start.configure(bg = 'grey', text='Start')
+        
+    def click_button(self, i):
+        if self.simon_st == 'HS':
+            self.human_says.append(i)
+            self.apariencia(i)
+
+            if sum( a != b for a, b in zip(self.human_says, self.simon_says)) > 0:
+                self.set_error()
+            else:
+                if len(self.simon_says) == len(self.human_says):
+                    self.human_says = []
+                    self.simon_st = 'SS'
+                    self.n_points += 1
+                    self.update_points()
+                    self.click_start()
+
+    def update_points(self):
+        self.label_points.configure(text = 'Points: ' + str(self.n_points))
+        
+        
+    def __init__(self):
+        self.simon_says = []
+        self.human_says = []
+        self.n_points = 0
+        self.simon_st = 'NS'
+        # NS - not started, SS - simon says, HS - human says, ER - Error - human fails 
+        self.root = tk.Tk()
+        self.root.geometry("500x500")
+        self.buttonA = tk.Button(self.root,
+                                 text = "Rojo",
+                                 bg = "red",
+                                 fg = "black",
+                                 height = 10, 
+                                 width = 20,
+                                command = lambda: self.click_button(1))
+
+        self.buttonB = tk.Button(self.root,
+                                text="Azul",
+                                bg = "blue",
+                                fg = "black",
+                                height = 10, 
+                                width = 20,
+                                command = lambda: self.click_button(2))
+       
+        self.buttonC = tk.Button(self.root,
+                               text="Verde",
+                               bg = "green",
+                               fg = "black",
+                               height = 10, 
+                               width = 20,
+                               command = lambda: self.click_button(3))
+        
+        self.buttonD = tk.Button(self.root,
+                                text="Amarillo",
+                                bg = "yellow",
+                                fg = "black",
+                                height = 10, 
+                                width = 20,
+                                command = lambda: self.click_button(4))
+        self.button_start = tk.Button(self.root,
+                                text="Start",
+                                bg = "grey",
+                                fg = "black",
+                                height = 3, 
+                                width = 20,
+                                command = lambda: self.click_start())
+        
+        self.label_points = tk.Label(self.root,
+                                text="Points: ",
+                                fg = "black",
+                                height = 3, 
+                                width = 20)
+
+          
+         
+        self.buttonA.place(x=80, y=100)
+        self.buttonB.place(x=255, y=300)
+        self.buttonC.place(x=80, y=300)
+        self.buttonD.place(x=255, y=100)
+        self.button_start.place(x=80, y=10)
+        self.label_points.place(x=255, y=10)
+        #apariencia(self, random.randrange(1,4))
+        self.root.mainloop()  
+        
+
+            
+app = Test()
