@@ -11,7 +11,7 @@ class Test():
             self.button_start.configure(bg = 'blue', text='My Turn')
             self.simon_st = 'SS'
             self.human_says = []
-            self.n_points = 0
+            self.n_points = 0           
             self.label_record.configure(text = 'Record: ' + str(self.n_record))
             self.update_points()
             self.simon_says.append(random.randint(1, 4))
